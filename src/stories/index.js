@@ -147,6 +147,9 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
             <MultiSelect
                 options={options}
                 onSelectedChanged={this.handleSelectedChanged.bind(this)}
+                onClose={() => {
+                    console.log('closed'); // eslint-disable-line no-console
+                }}
                 selected={selected}
                 valueRenderer={valueRenderer}
                 ItemRenderer={ItemRenderer}

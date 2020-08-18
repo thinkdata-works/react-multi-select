@@ -14,8 +14,9 @@ type Props = {
     contentProps: Object,
     isLoading?: boolean,
     disabled?: boolean,
-    shouldToggleOnHover?: boolean
+    shouldToggleOnHover?: boolean,
     labelledBy?: string,
+    onClose?: () => void
 };
 
 type State = {
@@ -43,7 +44,13 @@ class Dropdown extends Component<Props, State> {
 
     handleDocumentClick = (event: Event) => {
         if (this.wrapper && !this.wrapper.contains(event.target)) {
+            const {onClose} = this.props;
+
             this.setState({expanded: false});
+
+            if (onClose != null) {
+                onClose();
+            }
         }
     }
 
@@ -100,7 +107,7 @@ class Dropdown extends Component<Props, State> {
     }
 
     toggleExpanded = (value: ?boolean) => {
-        const {isLoading} = this.props;
+        const {isLoading, onClose} = this.props;
         const {expanded} = this.state;
 
         if (isLoading) {
@@ -113,6 +120,10 @@ class Dropdown extends Component<Props, State> {
 
         if (!newExpanded && this.wrapper) {
             this.wrapper.focus();
+        }
+
+        if (!newExpanded && onClose != null) {
+            onClose();
         }
     }
 

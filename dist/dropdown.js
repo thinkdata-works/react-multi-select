@@ -49,7 +49,14 @@ var Dropdown = function (_Component) {
             hasFocus: false
         }, _this.handleDocumentClick = function (event) {
             if (_this.wrapper && !_this.wrapper.contains(event.target)) {
+                var _onClose = _this.props.onClose;
+
+
                 _this.setState({ expanded: false });
+
+                if (_onClose != null) {
+                    _onClose();
+                }
             }
         }, _this.handleKeyDown = function (e) {
             switch (e.which) {
@@ -98,7 +105,9 @@ var Dropdown = function (_Component) {
                 _this.toggleExpanded(toggleExpanded);
             }
         }, _this.toggleExpanded = function (value) {
-            var isLoading = _this.props.isLoading;
+            var _this$props = _this.props,
+                isLoading = _this$props.isLoading,
+                onClose = _this$props.onClose;
             var expanded = _this.state.expanded;
 
 
@@ -112,6 +121,10 @@ var Dropdown = function (_Component) {
 
             if (!newExpanded && _this.wrapper) {
                 _this.wrapper.focus();
+            }
+
+            if (!newExpanded && onClose != null) {
+                onClose();
             }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -156,7 +169,8 @@ var Dropdown = function (_Component) {
             var _props2 = this.props,
                 children = _props2.children,
                 isLoading = _props2.isLoading,
-                disabled = _props2.disabled;
+                disabled = _props2.disabled,
+                labelledBy = _props2.labelledBy;
 
 
             var expandedHeaderStyle = expanded ? styles.dropdownHeaderExpanded : undefined;
@@ -175,6 +189,7 @@ var Dropdown = function (_Component) {
                     className: 'dropdown',
                     tabIndex: '0',
                     role: 'combobox',
+                    'aria-labelledby': labelledBy,
                     'aria-expanded': expanded,
                     'aria-readonly': 'true',
                     'aria-disabled': disabled,

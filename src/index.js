@@ -27,6 +27,7 @@ type Props = {
     options: Array<Option>,
     selected: Array<any>,
     onSelectedChanged?: (selected: Array<any>) => void,
+    onClose?: () => void,
     valueRenderer?: (
         selected: Array<any>,
         options: Array<Option>
@@ -117,6 +118,7 @@ class MultiSelect extends Component<Props> {
             hasSelectAll,
             overrideStrings,
             labelledBy,
+            onClose,
         } = this.props;
 
         return <div className="multi-select">
@@ -138,6 +140,7 @@ class MultiSelect extends Component<Props> {
                 }}
                 disabled={disabled}
                 labelledBy={labelledBy}
+                onClose={onClose}
             >
                 {this.renderHeader()}
             </Dropdown>
