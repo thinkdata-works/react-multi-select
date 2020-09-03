@@ -53,6 +53,8 @@ var Dropdown = function (_Component) {
                 var _onClose = _this.props.onClose;
 
 
+                console.log(_expanded);
+
                 if (_onClose != null && _expanded) {
                     _onClose();
                 }

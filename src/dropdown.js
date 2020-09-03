@@ -47,6 +47,8 @@ class Dropdown extends Component<Props, State> {
             const {expanded} = this.state;
             const {onClose} = this.props;
 
+            console.log(expanded);
+
             if (onClose != null && expanded) {
                 onClose();
             }
