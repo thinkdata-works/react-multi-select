@@ -44,13 +44,14 @@ class Dropdown extends Component<Props, State> {
 
     handleDocumentClick = (event: Event) => {
         if (this.wrapper && !this.wrapper.contains(event.target)) {
+            const {expanded} = this.state;
             const {onClose} = this.props;
 
-            this.setState({expanded: false});
-
-            if (onClose != null) {
+            if (onClose != null && expanded) {
                 onClose();
             }
+
+            this.setState({expanded: false});
         }
     }
 
