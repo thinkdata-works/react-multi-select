@@ -14,7 +14,7 @@ type Props = {
     contentProps: Object,
     isLoading?: boolean,
     disabled?: boolean,
-    shouldToggleOnHover?: boolean
+    shouldToggleOnHover?: boolean,
     labelledBy?: string,
 };
 
@@ -269,11 +269,12 @@ const styles = {
     dropdownHeader: {
         boxSizing: 'border-box',
         backgroundColor: '#fff',
-        borderColor: '#d9d9d9 #ccc #b3b3b3',
         borderRadius: 4,
         borderBottomRightRadius: 4,
         borderBottomLeftRadius: 4,
-        border: '1px solid #ccc',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: '#ccc',
         color: '#333',
         cursor: 'default',
         display: 'table',
