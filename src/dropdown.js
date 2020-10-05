@@ -16,7 +16,8 @@ type Props = {
     disabled?: boolean,
     shouldToggleOnHover?: boolean,
     labelledBy?: string,
-    onClose?: () => void
+    onApply?: () => void,
+    onToggleOpen?: () => void
 };
 
 type State = {
@@ -45,10 +46,9 @@ class Dropdown extends Component<Props, State> {
     handleDocumentClick = (event: Event) => {
         if (this.wrapper && !this.wrapper.contains(event.target)) {
             const {expanded} = this.state;
-            const {onClose} = this.props;
 
-            if (onClose != null && expanded) {
-                onClose();
+            if (expanded) {
+                this.props.onToggleOpen();
             }
 
             this.setState({expanded: false});
@@ -108,9 +108,9 @@ class Dropdown extends Component<Props, State> {
     }
 
     toggleExpanded = (value: ?boolean) => {
-        const {isLoading, onClose} = this.props;
+        const {isLoading} = this.props;
         const {expanded} = this.state;
-
+        
         if (isLoading) {
             return;
         }
@@ -121,10 +121,7 @@ class Dropdown extends Component<Props, State> {
 
         if (!newExpanded && this.wrapper) {
             this.wrapper.focus();
-        }
-
-        if (!newExpanded && onClose != null) {
-            onClose();
+            this.props.onToggleOpen();
         }
     }
 
@@ -136,6 +133,16 @@ class Dropdown extends Component<Props, State> {
             style={styles.panelContainer}
         >
             <ContentComponent {...contentProps} />
+            <div style={styles.dropdownFooter}>
+                <button 
+                    // Style overrides from App:
+                    className="Table-Display-Select-Columns__apply-button Button Button--primary Button--slim"
+                    type="button"
+                    onClick={() => this.props.onApply()}
+                >
+                    Apply
+                </button>
+            </div>
         </div>;
     }
 
@@ -277,6 +284,15 @@ const styles = {
         position: 'relative',
         boxSizing: 'border-box',
         outline: 'none',
+    },
+    dropdownFooter: {
+        padding: '0.5em',
+        position: 'sticky',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#fff',
+        borderTop: '1px solid #ccc',
     },
     dropdownHeader: {
         boxSizing: 'border-box',
