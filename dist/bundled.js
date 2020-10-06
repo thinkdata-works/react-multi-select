@@ -382,11 +382,10 @@ var Dropdown = function (_Component) {
         }, _this.handleDocumentClick = function (event) {
             if (_this.wrapper && !_this.wrapper.contains(event.target)) {
                 var _expanded = _this.state.expanded;
-                var _onClose = _this.props.onClose;
 
 
-                if (_onClose != null && _expanded) {
-                    _onClose();
+                if (_expanded) {
+                    _this.props.onToggleOpen();
                 }
 
                 _this.setState({ expanded: false });
@@ -438,9 +437,7 @@ var Dropdown = function (_Component) {
                 _this.toggleExpanded(toggleExpanded);
             }
         }, _this.toggleExpanded = function (value) {
-            var _this$props = _this.props,
-                isLoading = _this$props.isLoading,
-                onClose = _this$props.onClose;
+            var isLoading = _this.props.isLoading;
             var expanded = _this.state.expanded;
 
 
@@ -454,10 +451,7 @@ var Dropdown = function (_Component) {
 
             if (!newExpanded && _this.wrapper) {
                 _this.wrapper.focus();
-            }
-
-            if (!newExpanded && onClose != null) {
-                onClose();
+                _this.props.onToggleOpen();
             }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -477,6 +471,8 @@ var Dropdown = function (_Component) {
     }, {
         key: 'renderPanel',
         value: function renderPanel() {
+            var _this2 = this;
+
             var _props = this.props,
                 ContentComponent = _props.contentComponent,
                 contentProps = _props.contentProps;
@@ -488,13 +484,29 @@ var Dropdown = function (_Component) {
                     className: 'dropdown-content',
                     style: styles.panelContainer
                 },
-                _react2.default.createElement(ContentComponent, contentProps)
+                _react2.default.createElement(ContentComponent, contentProps),
+                _react2.default.createElement(
+                    'div',
+                    { style: styles.dropdownFooter },
+                    _react2.default.createElement(
+                        'button',
+                        {
+                            // Style overrides from App:
+                            className: 'Table-Display-Select-Columns__apply-button Button Button--primary Button--slim',
+                            type: 'button',
+                            onClick: function onClick() {
+                                return _this2.props.onApply();
+                            }
+                        },
+                        'Apply'
+                    )
+                )
             );
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var _state = this.state,
                 expanded = _state.expanded,
@@ -528,7 +540,7 @@ var Dropdown = function (_Component) {
                     'aria-disabled': disabled,
                     style: styles.dropdownContainer,
                     ref: function ref(_ref2) {
-                        return _this2.wrapper = _ref2;
+                        return _this3.wrapper = _ref2;
                     },
                     onKeyDown: this.handleKeyDown,
                     onFocus: this.handleFocus,
@@ -542,7 +554,7 @@ var Dropdown = function (_Component) {
                         className: 'dropdown-heading',
                         style: _extends({}, styles.dropdownHeader, expandedHeaderStyle, focusedHeaderStyle),
                         onClick: function onClick() {
-                            return _this2.toggleExpanded();
+                            return _this3.toggleExpanded();
                         }
                     },
                     _react2.default.createElement(
@@ -639,6 +651,15 @@ var styles = {
         position: 'relative',
         boxSizing: 'border-box',
         outline: 'none'
+    },
+    dropdownFooter: {
+        padding: '0.5em',
+        position: 'sticky',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#fff',
+        borderTop: '1px solid #ccc'
     },
     dropdownHeader: {
         boxSizing: 'border-box',
@@ -1119,7 +1140,8 @@ var MultiSelect = function (_Component) {
                 hasSelectAll = _props3.hasSelectAll,
                 overrideStrings = _props3.overrideStrings,
                 labelledBy = _props3.labelledBy,
-                onClose = _props3.onClose;
+                onApply = _props3.onApply,
+                onToggleOpen = _props3.onToggleOpen;
 
 
             return _react2.default.createElement(
@@ -1145,7 +1167,8 @@ var MultiSelect = function (_Component) {
                         },
                         disabled: disabled,
                         labelledBy: labelledBy,
-                        onClose: onClose
+                        onApply: onApply,
+                        onToggleOpen: onToggleOpen
                     },
                     this.renderHeader()
                 )

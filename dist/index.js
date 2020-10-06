@@ -152,7 +152,8 @@ var MultiSelect = function (_Component) {
                 hasSelectAll = _props3.hasSelectAll,
                 overrideStrings = _props3.overrideStrings,
                 labelledBy = _props3.labelledBy,
-                onClose = _props3.onClose;
+                onApply = _props3.onApply,
+                onToggleOpen = _props3.onToggleOpen;
 
 
             return _react2.default.createElement(
@@ -178,7 +179,8 @@ var MultiSelect = function (_Component) {
                         },
                         disabled: disabled,
                         labelledBy: labelledBy,
-                        onClose: onClose
+                        onApply: onApply,
+                        onToggleOpen: onToggleOpen
                     },
                     this.renderHeader()
                 )
